@@ -111,14 +111,14 @@
   ##### 阿里云部署
     
  
- ### -----------2018年12月4日09:45:09-------------
+ ## -----------2018年12月4日笔记-------------
  
- ### 远程分支合并dev分支
- #### git checkout dev(先切换到dev分支，等待拉取数据)
- #### git pull origin dev（将dev的分支的数据拉取）
- #### git checkout masert(再切换到masert分支)
- #### git merge dev （合并分支）
- #### git push origin master(最后上传到远程分支)
+ #### 远程分支合并dev分支
+ ##### git checkout dev(先切换到dev分支，等待拉取数据)
+ ##### git pull origin dev（将dev的分支的数据拉取）
+ ##### git checkout masert(再切换到masert分支)
+ ##### git merge dev （合并分支）
+ ##### git push origin master(最后上传到远程分支)
  
  ### 数据库设计
 
