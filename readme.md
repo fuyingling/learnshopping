@@ -111,7 +111,7 @@
   ##### 阿里云部署
     
  
- #### -----------2018年12月4日09:45:09-------------
+ ### -----------2018年12月4日09:45:09-------------
  
  ### 远程分支合并dev分支
  #### git checkout dev(先切换到dev分支，等待拉取数据)
@@ -120,9 +120,79 @@
  #### git merge dev （合并分支）
  #### git push origin master(最后上传到远程分支)
  
- 
+ ### 数据库设计
 
+#### 新建数据库
+```
+ create database ilearnshopping;
+```
+#### 切换到数据库
+```
+use ilearnshopping;
+```
+#### 创建用户表
+```
+create table neuedu_user(
+id int(11) not null auto_increment comment '用户名',
+username varchar(50) not null comment '用户名',
+password varchar(50) not null comment '密码',
+email varchar(50) not null comment'邮箱',
+phone varchar(11) not null comment '联系方式',
+question varchar(100) not null comment '密保问题',
+answer varchar(100) not null comment '答案',
+role int(4) not null default 0 comment '用户角色',
+create_time datetime comment '创建时间',
+update_time datetime comment '修改时间',
+PRIMARY KEY (id),
+UNIQUE KEY user_name_index(username) USING BTREE
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+```
 
+#### 创建类别表
+```
+create table neuedu_category(
+id int(11) not null auto_increment comment '类别id',
+perent_id int(11) not null default 0 comment '父类id',
+name varchar(50) not null comment'类别名称',
+status int(4) default 1 comment '类别状态 1：正常 0：废弃',
+create_time datetime comment '创建时间',
+update_time datetime comment '修改时间',
+PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+```
+#### 创建商品表
+```
+create table neuedu_product(
+id int(11) not null auto_increment comment '商品id',
+category_id int(11) not null comment'商品所属的类别的id，值引用类别表的id',
+name varchar(100) not null comment '商品名称',
+detail text comment '商品详情',
+subtitle varchar(200) comment '商品副标题',
+main_image varchar(100) comment '商品主图',
+sub_image varchar(200) comment '商品子图',
+price decimal(20,2) not null comment '商品价格，总共20位，小数2位，正数18位',
+stock int(11) comment '商品库存',
+status int(6) default 1 comment '商品状态 1:在售 2:下架 3:删除',
+create_time datetime comment '创建时间',
+update_time datetime comment '修改时间',
+PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+```
+
+#### 创建购物车表
+```
+create table neuedu_cart(
+id int(11) not null auto_increment comment '购物车id',
+user_id int(11) not null comment '用户id',
+produce_id int (11) not null comment '商品id',
+quantity int(11) not null comment '购买数量',
+checked int(4) default 1 comment '1:选中 0:未选中',
+create_time datetime comment '创建时间',
+update_time datetime comment '修改时间',
+PRIMARY KEY (id),
+UNIQUE KEY user_id_index(user_id) USING BTREE
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+```
 
 
 
