@@ -273,7 +273,7 @@ create table neuedu_shipping(
 ```
 
 
-### 项目架构--四层架构
+## 项目架构--四层架构
 ```
 *********************************************************
     视图层（看到的页面）
@@ -285,8 +285,8 @@ create table neuedu_shipping(
     关系：控制层调用业务逻辑层，业务逻辑层调用Dao层
 *********************************************************
 ```
-###                 Mybatis-generator插件安装及使用
-##### 作用：一键生成dao、映射文件、实体类
+## Mybatis-generator插件安装及使用
+#### 作用：一键生成dao、映射文件、实体类
 ##### 1、新建项目，设置java文件夹（放代码）、resources（放资源文件）文件夹类型
 ##### 2、generatorConfig.xml放入resources文件夹中
 ##### 3、配置pom.xml，引入MySQL驱动包和mybatis-generator依赖  
@@ -374,7 +374,7 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 
 
 
-### 搭建ssm框架步骤
+## 搭建ssm框架步骤
 
 ##### 导入依赖
 ##### 统一版本号 <spring.version>4.2.0.RELEASE</spring.version>
