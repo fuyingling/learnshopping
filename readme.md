@@ -276,38 +276,104 @@ create table neuedu_shipping(
 ### 项目架构--四层架构
 ```
 
-    视图层
+    视图层（看到的页面）
     控制层controller
     业务逻辑层service
         接口和实现类  
-    Dao层
+    Dao层（负责数据库的操作、SQL语句）
 
+    关系：控制层调用业务逻辑层，业务逻辑层调用Dao层
 ```
-### Mybatis-generator插件
+### Mybatis-generator插件安装及使用
 ##### 作用：一键生成dao、映射文件、实体类
-#####  配置pom.xml，导入各种依赖，引入MySQL包和mybatis-generator依赖，引入org.mybatis.generator  
-##### 创建db.properties文件，输入名字密码网址驱动  
+##### 新建项目，设置java文件夹（放代码）、resources（放资源文件）文件夹类型
+##### generatorConfig.xml放入resources文件夹中
+##### 配置pom.xml，引入MySQL驱动包和mybatis-generator依赖  
+```
+ <!-- mysql驱动包 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.47</version>
+    </dependency>
+  
+    <!--mybatis-generator依赖-->
+    <dependency>
+      <groupId>org.mybatis.generator</groupId>
+      <artifactId>mybatis-generator-core</artifactId>
+      <version>1.3.5</version>
+    </dependency>
+```
+##### 引入插件,org.mybatis.generator,在<pluginManagement>上面
+```
+      <plugins>
+          <plugin>
+              <groupId>org.mybatis.generator</groupId>
+              <artifactId>mybatis-generator-maven-plugin</artifactId>
+              <version>1.3.6</version>
+              <configuration>
+                  <verbose>true</verbose>
+                  <overwrite>true</overwrite>
+              </configuration>
+          </plugin>
+```
+
+##### 在resources文件夹下创建db.properties文件，输入名字、密码、网址、驱动，为了防止插件默认加载系统的名字，最好加入前缀
 ```
        jdbc.username=root
        jdbc.password=345513
        jdbc.driver=com.mysql.jdbc.Driver
        jdbc.url=jdbc:mysql://localhost:3306/ilearnshopping 
 ```
-##### 在generatorConfig.xml 中配置db.properties
-##### 配置MySQL依赖包，输入jar包具体路径
-##### 配置当前文件下的各种数据。配置数据库用${}
-##### 配置实体类，SQL文件，Dao接口
+##### 下一步，在generatorConfig.xml 中配置db.properties（位置在<generatorConfiguration>命令的下面第一行加入命令）
 ```
+ <properties resource="db.properties"></properties>
+```
+##### 下一步，当前文件下配置MySQL依赖包，输入jar包具体路径在本机找路径
+```
+<classPathEntry location="C:\Users\dell\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+```
+##### 下一步，配置当前文件下的jdbc数据，配置数据库用${}
+```
+ <jdbcConnection userId="${jdbc.username}" password="${jdbc.password}" driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"/>
+```
+##### 下一步，配置实体类，SQL文件，Dao接口
+```
+    ===============================================================================
+    简写：
     com.neuedu.pojo         src/main/java
     com.neuedu.mapper       src/main/resources
     com.neuedu.dao          src/main/java
+    ============================================================================
+    明细：
+     <!-- 实体类-->
+            <javaModelGenerator targetPackage="com.neuedu.pojo" targetProject="src/main/java">
+     <!--配置sql文件-->
+            <sqlMapGenerator targetPackage="com.neuedu.mapper" targetProject="src/main/resources">
+     <!--生成Dao接口-->
+            <javaClientGenerator targetPackage="com.neuedu.dao" type="XMLMAPPER" targetProject="src/main/java">
+     
+     *重点注意：目录的书写方式
+     =================================================================================
 ```
-##### 配数据表
-##### 最后 右边栏的Maven Projects 里 pluging 里 mybatis-generator 里 mybatis-generator:generate   双击生成实体类、dao、mapper映射xml文件
+##### 配数据表（有几张表就有几个数据表，插件根据此表生成实体类，输入表名和实体类名字）
+```
+tableName="neuedu_user" domainObjectName="UserInfo"
+tableName="neuedu_category" domainObjectName="Category"
+tableName="neuedu_product" domainObjectName="Product" 
+tableName="neuedu_cart" domainObjectName="Cart" 
+tableName="neuedu_order" domainObjectName="Order"
+tableName="neuedu_order_item" domainObjectName="OrderItem"
+tableName="neuedu_payinfo" domainObjectName="PayInfo" 
+tableName="neuedu_shipping" domainObjectName="Shipping"
+
+```
+
+##### 最后 右边栏的Maven Projects 里 pluging 里 mybatis-generator 里 mybatis-generator:generate   双击生成实体类、dao、mapper映射xml文件,完成。
 
 
 
-### 搭建ssm框架
+### 搭建ssm框架步骤
 
 ##### 导入依赖
 ##### 统一版本号 <spring.version>4.2.0.RELEASE</spring.version>
