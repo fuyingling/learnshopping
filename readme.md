@@ -271,11 +271,8 @@ create table neuedu_shipping(
  PRIMARY KEY(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 ```
-#### 2018年12月5日09:35:16添加
-#### 冗余字段的定义
-#####  冗余字段是指反复出现的，重复的字段。也就是说在数据库中如果表a出现过字段b，表c再出现字段b，那么字段b就可以被看作是冗余字段了。
 
-##### 订单明细表上多加了一个user_id 冗余字段，为的是提高效率
+
 
 ## 项目架构--四层架构
 ```
@@ -409,3 +406,14 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 ##### @RequestMapping （value="/login.do"）  映射的网址，也就可以加在类上，多层级访问
 
 #### 12、配置tomcat 启动输入网址http://localhost:8080/login.do ,出现json数据 完成测试
+
+
+## 2018年12月5日笔记
+
+#### *冗余字段的定义
+##### 答：冗余字段是指反复出现的，重复的字段。也就是说在数据库中如果表a出现过字段b，表c再出现字段b，那么字段b就可以被看作是冗余字段了。
+
+##### 订单明细表上多加了一个user_id 冗余字段，为的是提高效率
+
+#### *数据库是怎么设计的？ 
+##### 答：根据需求分析，分析出来的需要什么样的功能，根据需要的功能设计所要用到的数据库表。
