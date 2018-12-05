@@ -389,19 +389,19 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 #### 5、mybatis-config.xml不用修改
 
 #### 6、springmvc.xml配置
-##### 7、开启注解，扫描包com.neuedu.controller ，也可以com.neuedu
-##### 8、配置视图解析器、文件上传、拦截器（一期项目不用）
+##### 开启注解，扫描包com.neuedu.controller ，也可以com.neuedu
+##### 配置视图解析器、文件上传、拦截器（一期项目不用）
 
 
-#### 9、web.xml更换老师的
-##### 10、加载spring配置文件  contextConfigLocation
-##### 11、加载监听器 
-##### 12、加载DispacherServlet    
+#### 7、web.xml更换老师的
+##### 8、加载spring配置文件  contextConfigLocation
+##### 9、加载监听器 
+##### 10、加载DispacherServlet    
 ##### /为缺省路径    访问 /login.do  有servlet处理login.do就交给对应的servlet处理。没有的话就交给/处理，就是dispacherservlet处理
 
-#### 13、创建测试类   Testcontroller
+#### 11、创建测试类   Testcontroller
 
 ##### @RestController 注解，往前端返回的数据是json格式
 ##### @RequestMapping （value="/login.do"）  映射的网址，也就可以加在类上，多层级访问
 
-#### 14、配置tomcat 启动输入网址http://localhost:8080/login.do ,出现json数据 完成测试
+#### 12、配置tomcat 启动输入网址http://localhost:8080/login.do ,出现json数据 完成测试
