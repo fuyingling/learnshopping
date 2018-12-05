@@ -317,6 +317,7 @@ create table neuedu_shipping(
                   <overwrite>true</overwrite>
               </configuration>
           </plugin>
+      </plugins>    
 ```
 
 ##### 5、在resources文件夹下创建db.properties文件，输入名字、密码、网址、驱动，为了防止插件默认加载系统的名字，最好加入前缀
