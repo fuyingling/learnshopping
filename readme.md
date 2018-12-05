@@ -417,3 +417,185 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 
 ### *数据库是怎么设计的？ 
 #### 答：根据需求分析，分析出来的需要什么样的功能，根据需要的功能设计所要用到的数据库表。
+
+### *进程和线程的区别？
+#### 答：进程就是一个应用程序在处理机上的一次执行过程，它是一个动态的概念，而线程是进程中的一部分，进程包含多个线程。
+
+
+
+
+#### 更换数据库连接池 
+```
+<!--数据库连接池-->
+    <!-- druid -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+```
+#### 更换spring.xml里面的c3p0数据库连接池
+```
+<!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="0"></property>
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="20"></property>
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+
+        <property name="validationQuery">
+            <value>SELECT 1</value>
+        </property>
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <!-- <property name="filters" value="stat" /> -->
+        <property name="filters" value="mergeStat" />
+    </bean>
+```
+
+#### @RequestParam(value = "username") // 这个username要和前台传进来的一样
+#### @RequestParam(value = "username") String username,//如果定义的值@RequestParam(value = "username")跟后面String username形参的值一样的话就可以省略前面，直接用形参接收
+```
+@RestController
+@RequestMapping(value = "/user/")
+public class TestController {
+
+    @Autowired
+    IUserService iUserService;
+
+
+
+    @RequestMapping(value = "login.do")//前台传参
+    public int login( String username,
+                      String password,
+                      String email,
+                      String phone,
+                      String question,
+                      String answer){
+
+//通过前台传过来的参数，给userInfo赋值
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(username);
+        userInfo.setPassword(password);
+        userInfo.setEmail(email);
+        userInfo.setPhone(phone);
+        userInfo.setQuestion(question);
+        userInfo.setAnswer(answer);
+        userInfo.setRole(1);//普通用户
+        userInfo.setCreateTime(new Date());//创建时间
+        userInfo.setUpdateTime(new Date());//修改时间
+
+       int count = iUserService.register(userInfo);
+
+        return count;
+
+    }
+
+  *实验结果为可以true
+
+
+```
+#### @RequestParam(value = "username",required = true,//里面的required = true，默认的是true，代表这个参数是必须传的，如果改成false，则可以传也可以不传
+#### @RequestParam(value = "username",required = true,defaultValue = "zhangsan" //最后的defaultValue = "zhangsan" 的意思是，如果required = true(必须传参数），那么就可以设定一个默认值，默认传这个默认值。在后面分页的时候用得到
+
+
+#### 用springmvc的对象绑定，用对象去接收，UserInfo接收
+
+
+##### parameterType 多个参数返回值用map
+
+
+#### 去掉返回结果的空值，页面的，在ServerResponse<T> 上加注解@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+```
+/**
+ * 封装返回前端的高复用对象
+ * */
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+public class ServerResponse<T> {
+    //状态码
+    private int status;
+    //返回接口数据
+    private T data;
+    //接口提示信息
+    private String msg;
+
+```
+
+```
+/**
+     * 判断接口是否调用成功
+     * */
+    @JsonIgnore//转json的时候把这个字段忽略掉
+    public boolean isSuccess(){
+        return this.status==Const.SUCCESS_CODE;
+    }
+```
+#### 登录接口的实现类要怎么写。如下一种方式
+```
+@Override
+    public ServerResponse login(String username, String password) {
+
+        //step1:参数的非空校验，传过来的参数不能是空的
+        if (username==null||username.equals("")){
+            return ServerResponse.createServerResponseByError("用户名不能为空");
+        }
+        if (password==null||password.equals("")){
+            return ServerResponse.createServerResponseByError("密码不能为空");
+        }
+
+        //step2:检查username是否存在
+        //step3:根据用户名和密码查询用户
+        //step4:处理结果并返回
+ 
+        return null;
+    }
+```
+##### " "空字符串，StringUtils.isBlank()认为是空的
+##### " "空字符串，StringUtils.isEmpty()认为不是空的
+
+
+
+
+##### 多个对象用map
+```
+ //根据用户名和密码查询用户
+    UserInfo selectUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+```  
+##### 返回值类型用map
+```
+<select id="selectUserByUsernameAndPassword" parameterType="map" resultMap="BaseResultMap">
+```
+
+
+
+
+
+
+
+
