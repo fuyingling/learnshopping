@@ -286,9 +286,9 @@ create table neuedu_shipping(
 ```
 ### Mybatis-generator插件安装及使用
 ##### 作用：一键生成dao、映射文件、实体类
-##### 新建项目，设置java文件夹（放代码）、resources（放资源文件）文件夹类型
-##### generatorConfig.xml放入resources文件夹中
-##### 配置pom.xml，引入MySQL驱动包和mybatis-generator依赖  
+##### 1、新建项目，设置java文件夹（放代码）、resources（放资源文件）文件夹类型
+##### 2、generatorConfig.xml放入resources文件夹中
+##### 3、配置pom.xml，引入MySQL驱动包和mybatis-generator依赖  
 ```
  <!-- mysql驱动包 -->
     <dependency>
@@ -304,7 +304,7 @@ create table neuedu_shipping(
       <version>1.3.5</version>
     </dependency>
 ```
-##### 引入插件,org.mybatis.generator,在pluginManagement上面
+##### 4、引入插件,org.mybatis.generator,在pluginManagement上面
 ```
       <plugins>
           <plugin>
@@ -318,26 +318,26 @@ create table neuedu_shipping(
           </plugin>
 ```
 
-##### 在resources文件夹下创建db.properties文件，输入名字、密码、网址、驱动，为了防止插件默认加载系统的名字，最好加入前缀
+##### 5、在resources文件夹下创建db.properties文件，输入名字、密码、网址、驱动，为了防止插件默认加载系统的名字，最好加入前缀
 ```
        jdbc.username=root
        jdbc.password=345513
        jdbc.driver=com.mysql.jdbc.Driver
        jdbc.url=jdbc:mysql://localhost:3306/ilearnshopping 
 ```
-##### 下一步，在generatorConfig.xml 中配置db.properties（位置在generatorConfiguration命令的下面第一行加入命令）
+##### 6、下一步，在generatorConfig.xml 中配置db.properties（位置在generatorConfiguration命令的下面第一行加入命令）
 ```
  <properties resource="db.properties"></properties>
 ```
-##### 下一步，当前文件下配置MySQL依赖包，输入jar包具体路径在本机找路径
+##### 7、下一步，当前文件下配置MySQL依赖包，输入jar包具体路径在本机找路径
 ```
 <classPathEntry location="C:\Users\dell\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
 ```
-##### 下一步，配置当前文件下的jdbc数据，配置数据库用${}
+##### 8、下一步，配置当前文件下的jdbc数据，配置数据库用${}
 ```
  <jdbcConnection userId="${jdbc.username}" password="${jdbc.password}" driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"/>
 ```
-##### 下一步，配置实体类，SQL文件，Dao接口
+##### 9、下一步，配置实体类，SQL文件，Dao接口
 ```
     ===============================================================================
     简写：
@@ -356,7 +356,7 @@ create table neuedu_shipping(
      *重点注意：目录的书写方式
      =================================================================================
 ```
-##### 配数据表（有几张表就有几个数据表，插件根据此表生成实体类，输入表名和实体类名字）
+##### 10、配数据表（有几张表就有几个数据表，插件根据此表生成实体类，输入表名和实体类名字）
 ```
 tableName="neuedu_user" domainObjectName="UserInfo"
 tableName="neuedu_category" domainObjectName="Category"
@@ -369,7 +369,7 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 
 ```
 
-##### 最后 右边栏的Maven Projects 里 pluging 里 mybatis-generator 里 mybatis-generator:generate   双击生成实体类、dao、mapper映射xml文件,完成。
+##### 11、最后 右边栏的Maven Projects 里 pluging 里 mybatis-generator 里 mybatis-generator:generate   双击生成实体类、dao、mapper映射xml文件,完成。
 
 
 
