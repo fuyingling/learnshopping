@@ -232,7 +232,7 @@ create_time datetime default null comment '已创建时间',
 update_time datetime default null comment '更新时间',
 PRIMARY KEY(id),
 KEY order_no_index(order_no) USING BTREE,
-KEY order_no_user_id_index(order_no,user_id) USING BTREE
+KEY order_no_user_id_index(order_no,user_id) USING BTREE   （组合索引）
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 ```
 
@@ -271,7 +271,11 @@ create table neuedu_shipping(
  PRIMARY KEY(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 ```
+#### 2018年12月5日09:35:16添加
+#### 冗余字段的定义
+#####  冗余字段是指反复出现的，重复的字段。也就是说在数据库中如果表a出现过字段b，表c再出现字段b，那么字段b就可以被看作是冗余字段了。
 
+##### 订单明细表上多加了一个user_id 冗余字段，为的是提高效率
 
 ## 项目架构--四层架构
 ```
