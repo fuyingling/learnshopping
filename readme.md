@@ -377,31 +377,31 @@ tableName="neuedu_shipping" domainObjectName="Shipping"
 
 ## 搭建ssm框架步骤
 
-##### 导入依赖
-##### 统一版本号 <spring.version>4.2.0.RELEASE</spring.version>
-##### 导入spring.xml springmvc.xml mybatis-config.xml文件
-#### spring.xml
+##### 1、导入依赖
+##### 2、统一版本号 <spring.version>4.2.0.RELEASE</spring.version>
+##### 3、导入spring.xml springmvc.xml mybatis-config.xml文件
+#### 4、spring.xml配置
 ##### 开启注解扫包。核对更改数据源的名字
 ##### configLocation 全局配置文件 classpath 类路径
 ##### mapperLocations 映射文件  用/分割地址  *mapper.xml 任意mapper.xml文件
 ##### 配置mybatis Dao接口的代理实现类，动态生成代理实现类，很重要
 
-#### mybatis-config.xml不用修改
+#### 5、mybatis-config.xml不用修改
 
-#### springmvc.xml 
-##### 开启注解，扫描包com.neuedu.controller ，也可以com.neuedu
-##### 配置视图解析器、文件上传、拦截器（一期项目不用）
+#### 6、springmvc.xml配置
+##### 7、开启注解，扫描包com.neuedu.controller ，也可以com.neuedu
+##### 8、配置视图解析器、文件上传、拦截器（一期项目不用）
 
 
-#### web.xml更换老师的
-##### 加载spring配置文件  contextConfigLocation
-##### 加载监听器 
-##### 加载DispacherServlet    
+#### 9、web.xml更换老师的
+##### 10、加载spring配置文件  contextConfigLocation
+##### 11、加载监听器 
+##### 12、加载DispacherServlet    
 ##### /为缺省路径    访问 /login.do  有servlet处理login.do就交给对应的servlet处理。没有的话就交给/处理，就是dispacherservlet处理
 
-#### 创建测试类   Testcontroller
+#### 13、创建测试类   Testcontroller
 
 ##### @RestController 注解，往前端返回的数据是json格式
 ##### @RequestMapping （value="/login.do"）  映射的网址，也就可以加在类上，多层级访问
 
-#### 配置tomcat 启动输入网址http://localhost:8080/login.do ,出现json数据 完成测试
+#### 14、配置tomcat 启动输入网址http://localhost:8080/login.do ,出现json数据 完成测试
