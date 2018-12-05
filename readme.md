@@ -304,7 +304,7 @@ create table neuedu_shipping(
       <version>1.3.5</version>
     </dependency>
 ```
-##### 引入插件,org.mybatis.generator,在<pluginManagement>上面
+##### 引入插件,org.mybatis.generator,在pluginManagement上面
 ```
       <plugins>
           <plugin>
@@ -325,7 +325,7 @@ create table neuedu_shipping(
        jdbc.driver=com.mysql.jdbc.Driver
        jdbc.url=jdbc:mysql://localhost:3306/ilearnshopping 
 ```
-##### 下一步，在generatorConfig.xml 中配置db.properties（位置在<generatorConfiguration>命令的下面第一行加入命令）
+##### 下一步，在generatorConfig.xml 中配置db.properties（位置在generatorConfiguration命令的下面第一行加入命令）
 ```
  <properties resource="db.properties"></properties>
 ```
