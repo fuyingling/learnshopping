@@ -20,9 +20,7 @@ public class ServerResponse<T> {
 
 
     //私有的构造方法
-    private ServerResponse() {
-        this.status = status;
-    }
+    private ServerResponse() {}
 
     private ServerResponse(int status) {
         this.status = status;
@@ -95,12 +93,6 @@ public class ServerResponse<T> {
 
         return new ServerResponse(status,msg);
     }
-
-
-
-
-
-
 
 
     public int getStatus() {

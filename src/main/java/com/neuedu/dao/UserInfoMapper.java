@@ -47,7 +47,11 @@ public interface UserInfoMapper {
     int updateByPrimaryKey(UserInfo record);
 
 
+    //查询用户名是否存在
     int checkUsername(String username);
+
+    //查询邮箱是否存在
+    int checkEmail(String email);
 
     //根据用户名和密码查询用户
     UserInfo selectUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);

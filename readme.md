@@ -140,7 +140,7 @@ email varchar(50) not null comment'邮箱',
 phone varchar(11) not null comment '联系方式',
 question varchar(100) not null comment '密保问题',
 answer varchar(100) not null comment '答案',
-role int(4) not null default 0 comment '用户角色',
+role int(4) not null default 0 comment '用户角色 0:普通用户 1:管理员',
 create_time datetime comment '创建时间',
 update_time datetime comment '修改时间',
 PRIMARY KEY (id),
@@ -581,7 +581,7 @@ public class ServerResponse<T> {
 
 
 
-##### 多个对象用map
+##### 多个对象参数返回值类型用map
 ```
  //根据用户名和密码查询用户
     UserInfo selectUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
@@ -590,12 +590,98 @@ public class ServerResponse<T> {
 ##### 返回值类型用map
 ```
 <select id="selectUserByUsernameAndPassword" parameterType="map" resultMap="BaseResultMap">
+
+插件已经将每张表的字段和Java实体类的字段做了一一映射，所以返回值就是resultMap
 ```
 
 
 
 
+## 2018年12月6日笔记
 
+#### 密码要进行加密  MD5 加密
+##### 
+```
+package com.neuedu.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+/**
+ * MD5加密工具类
+ * */
+public class MD5Utils {
 
+  // 全局数组
+  private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
+          "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
+  public MD5Utils() {
+  }
+
+  // 返回形式为数字跟字符串
+  private static String byteToArrayString(byte bByte) {
+    int iRet = bByte;
+    // System.out.println("iRet="+iRet);
+    if (iRet < 0) {
+      iRet += 256;
+    }
+    int iD1 = iRet / 16;
+    int iD2 = iRet % 16;
+    return strDigits[iD1] + strDigits[iD2];
+  }
+
+  // 返回形式只为数字
+  private static String byteToNum(byte bByte) {
+    int iRet = bByte;
+    System.out.println("iRet1=" + iRet);
+    if (iRet < 0) {
+      iRet += 256;
+    }
+    return String.valueOf(iRet);
+  }
+
+  // 转换字节数组为16进制字串
+  private static String byteToString(byte[] bByte) {
+    StringBuffer sBuffer = new StringBuffer();
+    for (int i = 0; i < bByte.length; i++) {
+      sBuffer.append(byteToArrayString(bByte[i]));
+    }
+    return sBuffer.toString();
+  }
+  /**
+   * 加密
+   *
+   * */
+  public static String getMD5Code(String strObj) {
+    String resultString = null;
+    try {
+      resultString = new String(strObj);
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      // md.digest() 该函数返回值为存放哈希值结果的byte数组
+      resultString = byteToString(md.digest(strObj.getBytes()));
+    } catch (NoSuchAlgorithmException ex) {
+      ex.printStackTrace();
+    }
+    return resultString;
+  }
+
+  //测试加密，不可逆的
+  
+  public static void main(String[] args) {
+    System.out.println(getMD5Code("1234"));
+  }
+  
+  //输出结果：81dc9bdb52d04dc20036dbd8313ed055（已经是加密过的）
+}
+```
+    
+#### 登录和注册都要进行加密  MD5Utils.getMD5Code(password)
+```
+  //step3:根据用户名和密码查询用户
+          UserInfo userInfo =  userInfoMapper.selectUserByUsernameAndPassword(username, MD5Utils.getMD5Code(password));
+            if (userInfo==null){//用户名存在还是查询不到，说明密码是错的
+                return ServerResponse.createServerResponseByError("密码错误");
+            }
+```
+    
+   

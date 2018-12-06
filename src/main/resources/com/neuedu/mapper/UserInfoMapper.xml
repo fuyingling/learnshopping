@@ -36,8 +36,7 @@
       update_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),now())
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.neuedu.pojo.UserInfo">
     <!--
@@ -91,6 +90,11 @@ select id, username, password, email, phone, question, answer, role, create_time
 
   </select>
 
+  <!--判断邮箱是否已经存在的-->
+  <select id="checkEmail" parameterType="string" resultType="int">
 
+    select count(1) from neuedu_user where email=#{email}
+
+  </select>
 
 </mapper>
