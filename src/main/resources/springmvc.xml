@@ -50,12 +50,12 @@
         &lt;!&ndash;拦截所有请求&ndash;&gt;
         <mvc:interceptor>
             &lt;!&ndash;
-               /manage/a
-               /manage/b/login.do
-               /manage/order/create.do
+               /backend/a
+               /backend/b/login.do
+               /backend/order/create.do
             &ndash;&gt;
-            <mvc:mapping path="/manage/**"/>
-            <mvc:exclude-mapping path="/manage/user/login.do"/>
+            <mvc:mapping path="/backend/**"/>
+            <mvc:exclude-mapping path="/backend/user/login.do"/>
             <bean  class="com.neuedu.controller.common.intercepter.AuthorityInterceptor"></bean>
         </mvc:interceptor>
 

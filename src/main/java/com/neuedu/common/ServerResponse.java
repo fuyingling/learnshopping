@@ -71,10 +71,11 @@ public class ServerResponse<T> {
 
     /**
      * 失败
-     **/
+     *
+     * @param userNotLogin*/
 
 
-    public static ServerResponse createServerResponseByError(){
+    public static ServerResponse createServerResponseByError(ResponseCode userNotLogin){
 
         return new ServerResponse(Const.SUCCESS_ERROR);
     }

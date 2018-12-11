@@ -11,4 +11,9 @@ public class Const {
 
     public static final String CURRENTUSER="CURRENTUSER";
 
+    public static final String USERNAME="username" ;
+    public static final String EMAIL="email" ;
+
+
+
 }

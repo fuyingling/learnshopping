@@ -55,6 +55,19 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <!--根据名字更新密码-->
+  <update id="updatepasswordByUsername" parameterType="map">
+update neuedu_user
+    set
+      password = #{password,jdbcType=VARCHAR},
+      update_time = now()
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
@@ -96,5 +109,19 @@ select id, username, password, email, phone, question, answer, role, create_time
     select count(1) from neuedu_user where email=#{email}
 
   </select>
+
+  <!--根据用户名查询密码问题-->
+  <select id="selectQuestByUsername" parameterType="string" resultType="string">
+    select question from neuedu_user where username=#{username}
+  </select>
+
+  <!--根据用户名和密保问题及答案查询-->
+<select id="selectByUsernameAndQuestAndAnswer" parameterType="map" resultType="int">
+select count(1) from neuedu_user
+where username=#{username} and question=#{question} and answer=#{answer}
+</select>
+
+
+
 
 </mapper>
